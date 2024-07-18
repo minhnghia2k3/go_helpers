@@ -1,4 +1,4 @@
-package main
+package helpers
 
 import (
 	"encoding/json"
@@ -12,7 +12,7 @@ import (
 
 // readIdParam convert id parameter into int based 10 with 64 bits.
 // returns an id and correspond error
-func (app *application) readIdParam(r *http.Request) (int64, error) {
+func readIdParam(r *http.Request) (int64, error) {
 	id, err := strconv.ParseInt(r.PathValue("id"), 10, 64)
 	if err != nil {
 		return 0, errors.New("invalid id parameter")
@@ -43,7 +43,7 @@ USAGE:
 	app.serverErrorResponse(w, r, err)
 	}
 */
-func (app *application) writeJSON(w http.ResponseWriter, status int, data envelop, headers http.Header) error {
+func writeJSON(w http.ResponseWriter, status int, data envelop, headers http.Header) error {
 	// Encode the data to JSON
 	js, err := json.Marshal(data)
 	if err != nil {
@@ -84,7 +84,7 @@ Also check the vulnerabilities from Developers, Users, Expected errors, or Unexp
 		return
 	}
 */
-func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any) error {
+func readJSON(w http.ResponseWriter, r *http.Request, dst any) error {
 	// Use http.MaxBytesReader() to limit the size of the request to 1MB.
 	maxBytes := 1_048_576
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
